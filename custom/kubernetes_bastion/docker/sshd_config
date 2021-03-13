@@ -1,0 +1,8 @@
+AllowAgentForwarding yes
+AllowUsers ssh-user
+AuthorizedKeysFile /var/ssh/%u/authorized_keys
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+PermitRootLogin no
+PubkeyAuthentication yes
+X11Forwarding no
