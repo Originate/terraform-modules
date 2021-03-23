@@ -24,8 +24,9 @@ variable "acm_certificate_arn" {
 }
 
 variable "ingress_path_backends" {
-  description = "A map of service endpoints to forward traffic for the path defined in the key"
-  type = map(object({
+  description = "An ordered list of service endpoints to forward traffic for the given pattern"
+  type = list(object({
+    pattern      = string
     service_name = string
     service_port = number
   }))

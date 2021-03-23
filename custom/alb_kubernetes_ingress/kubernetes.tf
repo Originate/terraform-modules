@@ -47,7 +47,7 @@ resource "kubernetes_ingress" "public" {
           for_each = var.ingress_path_backends
 
           content {
-            path = path.key
+            path = path.value.pattern
 
             backend {
               service_name = path.value.service_name
