@@ -99,8 +99,8 @@ resource "kubernetes_deployment" "this" {
             privileged                 = false
             read_only_root_filesystem  = true
             run_as_non_root            = true
-            run_as_user                = 65534 # nobody
-            run_as_group               = 65534 # nogroup
+            run_as_user                = var.run_as_user
+            run_as_group               = var.run_as_group
           }
 
           liveness_probe {

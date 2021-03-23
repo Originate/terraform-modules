@@ -53,6 +53,28 @@ variable "ephemeral_mount_paths" {
   default     = {}
 }
 
+variable "run_as_user" {
+  description = "The Linux user ID to run the container"
+  type        = number
+  default     = 65534 # nobody
+
+  validation {
+    condition     = var.run_as_user >= 0 && var.run_as_user <= 65534
+    error_message = "The run_as_user value must be between 0 and 65534, inclusive."
+  }
+}
+
+variable "run_as_group" {
+  description = "The Linux group ID to run the container"
+  type        = number
+  default     = 65534 # nogroup
+
+  validation {
+    condition     = var.run_as_group >= 0 && var.run_as_group <= 65534
+    error_message = "The run_as_group value must be between 0 and 65534, inclusive."
+  }
+}
+
 variable "autoscale_max" {
   description = "Maximum number of instances per service"
   type        = number
