@@ -2,11 +2,7 @@ resource "aws_acm_certificate" "environment" {
   domain_name       = aws_route53_zone.environment.name
   validation_method = "DNS"
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 
   lifecycle {
     create_before_destroy = true

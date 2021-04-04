@@ -3,9 +3,5 @@ resource "aws_route53_zone" "base" {
 
   force_destroy = false
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }

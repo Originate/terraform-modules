@@ -7,11 +7,7 @@ resource "aws_route53_zone" "environment" {
 
   force_destroy = false
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_route53_record" "delegation_ns" {

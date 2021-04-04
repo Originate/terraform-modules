@@ -24,9 +24,5 @@ module "vpc" {
     "kubernetes.io/role/internal-elb" = "1"
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }

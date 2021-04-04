@@ -65,9 +65,5 @@ module "rds" {
   skip_final_snapshot       = var.attributes.skip_final_snapshot
   final_snapshot_identifier = "${local.instance_name}-finalsnapshot-${random_uuid.final_snapshot.result}"
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.attributes.stack
-    Environment = var.attributes.env
-  }
+  tags = var.attributes.default_tags
 }

@@ -4,11 +4,7 @@ resource "aws_kms_key" "secrets" {
   is_enabled              = true
   enable_key_rotation     = true
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_kms_alias" "secrets" {

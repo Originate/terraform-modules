@@ -10,11 +10,7 @@ resource "aws_s3_bucket" "cloudtrail" {
     }
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_s3_bucket_public_access_block" "cloudtrail" {
@@ -70,11 +66,7 @@ resource "aws_s3_bucket_policy" "cloudtrail" {
 resource "aws_cloudwatch_log_group" "cloudtrail" {
   name = "${var.stack}-cloudtrail-logs"
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_iam_role" "cloudtrail" {
@@ -95,11 +87,7 @@ resource "aws_iam_role" "cloudtrail" {
     }
   EOT
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy" "cloudtrail" {
@@ -159,11 +147,7 @@ resource "aws_cloudtrail" "this" {
     }
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 
   # AWS checks that CloudTrail has access to write to the S3 bucket so this
   # fails if the bucket policy is not in place first

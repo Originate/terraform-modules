@@ -7,9 +7,5 @@ resource "aws_ecr_repository" "repo" {
     scan_on_push = true
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }

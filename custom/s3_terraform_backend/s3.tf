@@ -15,11 +15,7 @@ resource "aws_s3_bucket" "tfstate" {
     enabled = true
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 resource "aws_s3_bucket_public_access_block" "tfstate" {

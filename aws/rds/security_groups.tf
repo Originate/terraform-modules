@@ -10,10 +10,7 @@ resource "aws_security_group" "rds" {
     security_groups = var.attributes.allowed_security_group_ids
   }
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.attributes.stack
-    Environment = var.attributes.env
-    Name        = "${local.instance_name}-rds"
-  }
+  tags = merge(var.attributes.default_tags, {
+    Name = "${local.instance_name}-rds"
+  })
 }

@@ -5,7 +5,7 @@ resource "kubernetes_ingress" "public" {
 
     annotations = {
       "kubernetes.io/ingress.class"               = "alb"
-      "alb.ingress.kubernetes.io/tags"            = "Terraform=false,Stack=${var.stack},Environment=${var.env}"
+      "alb.ingress.kubernetes.io/tags"            = join(",", [for k, v in merge(var.default_tags, { Terraform = "false" }) : "${k}=${v}"])
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
       "alb.ingress.kubernetes.io/certificate-arn" = var.acm_certificate_arn
       "alb.ingress.kubernetes.io/listen-ports" = jsonencode(

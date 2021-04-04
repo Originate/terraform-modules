@@ -8,6 +8,11 @@ variable "env" {
   type        = string
 }
 
+variable "default_tags" {
+  description = "Default tags to add to AWS resources"
+  type        = map(string)
+}
+
 variable "az_count" {
   description = "The number of availability zones to use"
   type        = number

@@ -53,11 +53,7 @@ module "eks" {
   # time_sleep.wait_for_logs_to_flush resource
   cluster_delete_timeout = time_sleep.wait_for_logs_to_flush.triggers.cluster_delete_timeout
 
-  tags = {
-    Terraform   = "true"
-    Stack       = var.stack
-    Environment = var.env
-  }
+  tags = var.default_tags
 }
 
 # The terraform-aws-eks module leaves behind a CloudWatch Log Group after
