@@ -54,7 +54,7 @@ resource "kubernetes_deployment" "this" {
       spec {
         container {
           name  = local.name
-          image = "${aws_ecr_repository.this.repository_url}:${local.docker_tag}"
+          image = "${var.repo_url}:${local.docker_tag}"
 
           port {
             container_port = var.ssh_port
