@@ -156,6 +156,11 @@ resource "kubernetes_deployment" "this" {
       }
     }
   }
+
+  timeouts {
+    create = "5m"
+    update = "5m"
+  }
 }
 
 resource "kubernetes_horizontal_pod_autoscaler" "this" {
