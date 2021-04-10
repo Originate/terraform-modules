@@ -1,5 +1,5 @@
 variable "name" {
-  description = "The name of this service"
+  description = "The name of this job"
   type        = string
 }
 
@@ -28,21 +28,6 @@ variable "docker_entrypoint" {
   description = "Overrides the default ENTRYPOINT of the Docker image"
   type        = list(string)
   default     = null
-}
-
-variable "container_port" {
-  description = "The port that the container is listening"
-  type        = number
-
-  validation {
-    condition     = var.container_port >= 1025 && var.container_port <= 65535
-    error_message = "The container_port value must be between 1025 and 65535, inclusive."
-  }
-}
-
-variable "health_check_path" {
-  description = "The URL path of the health check endpoint (e.g. '/healthcheck')"
-  type        = string
 }
 
 variable "config_maps" {
@@ -85,20 +70,4 @@ variable "run_as_group" {
     condition     = var.run_as_group >= 0 && var.run_as_group <= 65534
     error_message = "The run_as_group value must be between 0 and 65534, inclusive."
   }
-}
-
-variable "autoscale_max" {
-  description = "Maximum number of instances per service"
-  type        = number
-}
-
-variable "autoscale_min" {
-  description = "Minimum number of instances per service"
-  type        = number
-}
-
-variable "using_eks" {
-  description = "Set to true for running on EKS clusters"
-  type        = bool
-  default     = false
 }

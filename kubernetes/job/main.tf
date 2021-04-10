@@ -22,34 +22,18 @@ resource "kubernetes_secret" "this" {
   data = each.value
 }
 
-resource "kubernetes_deployment" "this" {
+resource "kubernetes_job" "this" {
   metadata {
-    name      = var.name
+    name      = "${var.name}-${var.docker_tag}"
     namespace = var.kubernetes_namespace
 
     labels = {
-      app = var.name
+      app       = var.name
+      image_tag = var.docker_tag
     }
   }
 
   spec {
-    replicas = var.autoscale_min
-
-    selector {
-      match_labels = {
-        app = var.name
-      }
-    }
-
-    strategy {
-      type = "RollingUpdate"
-
-      rolling_update {
-        max_surge       = "100%"
-        max_unavailable = "25%"
-      }
-    }
-
     template {
       metadata {
         labels = {
@@ -90,10 +74,6 @@ resource "kubernetes_deployment" "this" {
             }
           }
 
-          port {
-            container_port = var.container_port
-          }
-
           security_context {
             capabilities {
               drop = ["all"]
@@ -105,31 +85,6 @@ resource "kubernetes_deployment" "this" {
             run_as_non_root            = true
             run_as_user                = var.run_as_user
             run_as_group               = var.run_as_group
-          }
-
-          liveness_probe {
-            tcp_socket {
-              port = var.container_port
-            }
-
-            failure_threshold     = 2
-            initial_delay_seconds = 30
-            period_seconds        = 30
-            success_threshold     = 1
-            timeout_seconds       = 2
-          }
-
-          readiness_probe {
-            http_get {
-              path = var.health_check_path
-              port = var.container_port
-            }
-
-            failure_threshold     = 2
-            initial_delay_seconds = 30
-            period_seconds        = 30
-            success_threshold     = 1
-            timeout_seconds       = 2
           }
 
           dynamic "volume_mount" {
@@ -153,49 +108,19 @@ resource "kubernetes_deployment" "this" {
             }
           }
         }
+
+        restart_policy = "Never"
       }
     }
-  }
-}
 
-resource "kubernetes_horizontal_pod_autoscaler" "this" {
-  metadata {
-    name      = kubernetes_deployment.this.metadata[0].name
-    namespace = kubernetes_deployment.this.metadata[0].namespace
+    completions = 1
+    parallelism = 1
   }
 
-  spec {
-    min_replicas = var.autoscale_min
-    max_replicas = var.autoscale_max
+  wait_for_completion = true
 
-    scale_target_ref {
-      kind = "Deployment"
-      name = kubernetes_deployment.this.metadata[0].name
-    }
-  }
-}
-
-resource "kubernetes_service" "this" {
-  metadata {
-    name      = kubernetes_deployment.this.metadata[0].name
-    namespace = kubernetes_deployment.this.metadata[0].namespace
-
-    annotations = var.using_eks ? {
-      "alb.ingress.kubernetes.io/healthcheck-path" = var.health_check_path
-    } : null
-  }
-
-  spec {
-    selector = {
-      app = kubernetes_deployment.this.spec[0].template[0].metadata[0].labels.app
-    }
-
-    type = var.using_eks ? "NodePort" : "ClusterIP"
-
-    port {
-      name        = "http"
-      port        = 80
-      target_port = kubernetes_deployment.this.spec[0].template[0].spec[0].container[0].port[0].container_port
-    }
+  timeouts {
+    create = "5m"
+    update = "5m"
   }
 }
