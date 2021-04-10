@@ -1,11 +1,11 @@
-resource "aws_ecr_repository" "repo" {
-  for_each = toset(var.repo_names)
+module "ecr" {
+  for_each = toset(var.ecr_repository_names)
+  source   = "../ecr"
 
-  name = "${var.stack}/${each.key}"
+  stack        = var.stack
+  default_tags = var.default_tags
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = var.default_tags
+  name                = each.key
+  keep_image_count    = var.ecr_keep_image_count
+  preserve_image_tags = var.ecr_preserve_image_tags
 }

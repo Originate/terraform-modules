@@ -8,7 +8,7 @@ variable "ssh_port" {
   }
 }
 
-variable "repo_url" {
+variable "docker_repo" {
   description = "The URL of the Docker repository to store images"
   type        = string
 }

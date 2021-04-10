@@ -1,7 +1,7 @@
 locals {
   docker_context_path = "${path.module}/docker"
   docker_tag = md5(join("", [
-    var.repo_url,
+    var.docker_repo,
     tls_private_key.ssh.public_key_openssh,
     file("${local.docker_context_path}/Dockerfile"),
     file("${local.docker_context_path}/sshd_config")
@@ -17,10 +17,10 @@ resource "null_resource" "docker_push" {
     working_dir = local.docker_context_path
     command     = <<-EOT
       set -eu
-      docker build --build-arg "SSH_PORT=${var.ssh_port}" --build-arg "SSH_PUB_KEY=${tls_private_key.ssh.public_key_openssh}" -t "${var.repo_url}:${local.docker_tag}" -t "${var.repo_url}:latest" .
+      docker build --build-arg "SSH_PORT=${var.ssh_port}" --build-arg "SSH_PUB_KEY=${tls_private_key.ssh.public_key_openssh}" -t "${var.docker_repo}:${local.docker_tag}" -t "${var.docker_repo}:latest" .
       ${var.docker_login_command}
-      docker push "${var.repo_url}:${local.docker_tag}"
-      docker push "${var.repo_url}:latest"
+      docker push "${var.docker_repo}:${local.docker_tag}"
+      docker push "${var.docker_repo}:latest"
     EOT
   }
 }

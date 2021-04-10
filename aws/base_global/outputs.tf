@@ -2,9 +2,9 @@ output "domain_name_servers" {
   value = aws_route53_zone.base.name_servers
 }
 
-output "ecr_repo_urls" {
+output "ecr_repository_urls" {
   value = {
-    for key, repo in aws_ecr_repository.repo :
+    for key, repo in module.ecr :
     key => repo.repository_url
   }
 }
