@@ -1,3 +1,7 @@
+data "aws_route53_zone" "base" {
+  zone_id = var.route53_zone_id
+}
+
 resource "kubernetes_ingress" "public" {
   metadata {
     name      = "public-ingress"
@@ -20,11 +24,21 @@ resource "kubernetes_ingress" "public" {
       )
       "alb.ingress.kubernetes.io/actions.ssl-redirect" = jsonencode(
         {
-          Type = "redirect"
-          RedirectConfig = {
-            Protocol   = "HTTPS"
-            Port       = "443"
-            StatusCode = "HTTP_301"
+          type = "redirect"
+          redirectConfig = {
+            protocol   = "HTTPS"
+            port       = "443"
+            statusCode = "HTTP_301"
+          }
+        }
+      )
+      "alb.ingress.kubernetes.io/actions.response-404" = jsonencode(
+        {
+          type = "fixed-response"
+          fixedResponseConfig = {
+            # contentType = "text/plain"
+            statusCode = "404"
+            # messageBody = ""
           }
         }
       )
@@ -42,16 +56,39 @@ resource "kubernetes_ingress" "public" {
             service_port = "use-annotation"
           }
         }
+      }
+    }
 
-        dynamic "path" {
-          for_each = var.ingress_path_backends
+    dynamic "rule" {
+      for_each = var.ingress_rules
 
-          content {
-            path = path.value.pattern
+      content {
+        host = "${rule.key != "" ? "${rule.key}." : ""}${data.aws_route53_zone.base.name}"
 
-            backend {
-              service_name = path.value.service_name
-              service_port = path.value.service_port
+        http {
+          dynamic "path" {
+            for_each = try(coalescelist(rule.value.disable_paths), [])
+
+            content {
+              path = path.value
+
+              backend {
+                service_name = "response-404"
+                service_port = "use-annotation"
+              }
+            }
+          }
+
+          dynamic "path" {
+            for_each = rule.value.paths
+
+            content {
+              path = path.value.pattern
+
+              backend {
+                service_name = path.value.service_name
+                service_port = path.value.service_port
+              }
             }
           }
         }

@@ -18,11 +18,18 @@ variable "acm_certificate_arn" {
   type        = string
 }
 
-variable "ingress_path_backends" {
-  description = "An ordered list of service endpoints to forward traffic for the given pattern"
-  type = list(object({
-    pattern      = string
-    service_name = string
-    service_port = number
-  }))
+variable "ingress_rules" {
+  description = "A map of hosts to forward or disable traffic for the list of given path patterns, with the subdomain as the key (or empty string for the base domain)"
+  type = map(object(
+    {
+      paths = list(object(
+        {
+          pattern      = string
+          service_name = string
+          service_port = number
+        }
+      ))
+      disable_paths = optional(list(string))
+    }
+  ))
 }

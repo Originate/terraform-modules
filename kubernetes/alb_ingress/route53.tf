@@ -4,9 +4,21 @@ data "aws_lb" "ingress" {
   name = regex("^([^.]*)(?:-[^.]*)", kubernetes_ingress.public.status[0].load_balancer[0].ingress[0].hostname)[0]
 }
 
-resource "aws_route53_record" "ingress" {
+resource "aws_route53_record" "base" {
   type    = "A"
   name    = ""
+  zone_id = var.route53_zone_id
+
+  alias {
+    name                   = data.aws_lb.ingress.dns_name
+    zone_id                = data.aws_lb.ingress.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "wildcard" {
+  type    = "A"
+  name    = "*"
   zone_id = var.route53_zone_id
 
   alias {

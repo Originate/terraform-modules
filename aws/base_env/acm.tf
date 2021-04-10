@@ -1,6 +1,7 @@
 resource "aws_acm_certificate" "environment" {
-  domain_name       = aws_route53_zone.environment.name
-  validation_method = "DNS"
+  domain_name               = aws_route53_zone.environment.name
+  subject_alternative_names = ["*.${aws_route53_zone.environment.name}"]
+  validation_method         = "DNS"
 
   tags = var.default_tags
 
