@@ -20,13 +20,15 @@ variable "identifier" {
 
 variable "password_policy" {
   description = "The strength requirements for user passwords"
-  type = object({
-    min_length        = number
-    require_lowercase = bool
-    require_numbers   = bool
-    require_symbols   = bool
-    require_uppercase = bool
-  })
+  type = object(
+    {
+      min_length        = number
+      require_lowercase = bool
+      require_numbers   = bool
+      require_symbols   = bool
+      require_uppercase = bool
+    }
+  )
   default = {
     min_length        = 8
     require_lowercase = true
@@ -38,18 +40,22 @@ variable "password_policy" {
 
 variable "clients" {
   description = "A map of user pool clients to create"
-  type = map(object({
-    name = string
-  }))
+  type = map(object(
+    {
+      name = string
+    }
+  ))
   default = {}
 }
 
 variable "groups" {
   description = "A map of user groups to create"
-  type = map(object({
-    name        = string
-    description = string
-    precedence  = number
-  }))
+  type = map(object(
+    {
+      name        = string
+      description = string
+      precedence  = number
+    }
+  ))
   default = {}
 }

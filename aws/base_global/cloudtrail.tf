@@ -25,36 +25,36 @@ resource "aws_s3_bucket_public_access_block" "cloudtrail" {
 resource "aws_s3_bucket_policy" "cloudtrail" {
   bucket = aws_s3_bucket.cloudtrail.id
 
-  policy = <<-EOT
+  policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Sid": "AclCheck",
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "cloudtrail.amazonaws.com"
-          },
-          "Action": "s3:GetBucketAcl",
-          "Resource": "${aws_s3_bucket.cloudtrail.arn}"
+          Sid    = "AclCheck"
+          Effect = "Allow"
+          Principal = {
+            Service = "cloudtrail.amazonaws.com"
+          }
+          Action   = "s3:GetBucketAcl"
+          Resource = aws_s3_bucket.cloudtrail.arn
         },
         {
-          "Sid": "LogsWrite",
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "cloudtrail.amazonaws.com"
-          },
-          "Action": "s3:PutObject",
-          "Resource": "${aws_s3_bucket.cloudtrail.arn}/*",
-          "Condition": {
-            "StringEquals": {
-              "s3:x-amz-acl": "bucket-owner-full-control"
+          Sid    = "LogsWrite"
+          Effect = "Allow"
+          Principal = {
+            Service = "cloudtrail.amazonaws.com"
+          }
+          Action   = "s3:PutObject"
+          Resource = "${aws_s3_bucket.cloudtrail.arn}/*"
+          Condition = {
+            StringEquals = {
+              "s3:x-amz-acl" = "bucket-owner-full-control"
             }
           }
         }
       ]
     }
-  EOT
+  )
 
   # Avoids issues when Terraform tries to update the public access settings and
   # bucket policy simultaneously
@@ -72,20 +72,20 @@ resource "aws_cloudwatch_log_group" "cloudtrail" {
 resource "aws_iam_role" "cloudtrail" {
   name = "${var.stack}-cloudtrail"
 
-  assume_role_policy = <<-EOT
+  assume_role_policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "cloudtrail.amazonaws.com"
-          },
-          "Action": "sts:AssumeRole"
+          Effect = "Allow"
+          Principal = {
+            Service = "cloudtrail.amazonaws.com"
+          }
+          Action = "sts:AssumeRole"
         }
       ]
     }
-  EOT
+  )
 
   tags = var.default_tags
 }
@@ -94,23 +94,23 @@ resource "aws_iam_role_policy" "cloudtrail" {
   name = "cloudwatch-permissions"
   role = aws_iam_role.cloudtrail.id
 
-  policy = <<-EOT
+  policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Effect": "Allow",
-          "Action": [
+          Effect = "Allow"
+          Action = [
             "logs:CreateLogStream",
             "logs:PutLogEvents"
-          ],
-          "Resource": [
+          ]
+          Resource = [
             "${aws_cloudwatch_log_group.cloudtrail.arn}:log-stream:*"
           ]
         }
       ]
     }
-  EOT
+  )
 }
 
 resource "aws_cloudtrail" "this" {

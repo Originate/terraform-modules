@@ -12,25 +12,25 @@ data "http" "lb_controller_crd_manifest" {
 resource "aws_iam_role" "lb_controller" {
   name = "${var.stack}-${var.env}-alb-ingress"
 
-  assume_role_policy = <<-EOT
+  assume_role_policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Effect": "Allow",
-          "Principal": {
-            "Federated": "${module.eks.oidc_provider_arn}"
-          },
-          "Action": "sts:AssumeRoleWithWebIdentity",
-          "Condition": {
-            "StringEquals": {
-              "${trimprefix(module.eks.cluster_oidc_issuer_url, "https://")}:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+          Effect = "Allow"
+          Principal = {
+            Federated = module.eks.oidc_provider_arn
+          }
+          Action = "sts:AssumeRoleWithWebIdentity"
+          Condition = {
+            StringEquals = {
+              "${trimprefix(module.eks.cluster_oidc_issuer_url, "https://")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
             }
           }
         }
       ]
     }
-  EOT
+  )
 
   tags = var.default_tags
 }
