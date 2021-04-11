@@ -97,5 +97,10 @@ resource "kubernetes_deployment" "this" {
     }
   }
 
-  depends_on = [null_resource.docker_push]
+  depends_on = [module.docker_push]
+
+  timeouts {
+    create = "5m"
+    update = "5m"
+  }
 }

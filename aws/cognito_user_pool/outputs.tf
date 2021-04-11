@@ -11,6 +11,5 @@ output "endpoint" {
 }
 
 output "client_ids" {
-  value     = { for name, client in aws_cognito_user_pool_client.this : name => client.id }
-  sensitive = true
+  value = { for key, client in aws_cognito_user_pool_client.this : key => client.id }
 }
