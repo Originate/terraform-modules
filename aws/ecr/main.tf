@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "this" {
-  name = "${var.stack}/${var.name}"
+  name = "${var.stack}/${var.env != "" ? "${var.env}/" : ""}${var.name}"
 
   image_scanning_configuration {
     scan_on_push = true

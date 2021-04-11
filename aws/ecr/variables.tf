@@ -3,6 +3,12 @@ variable "stack" {
   type        = string
 }
 
+variable "env" {
+  description = "The name of the environment"
+  type        = string
+  default     = ""
+}
+
 variable "default_tags" {
   description = "Default tags to add to AWS resources"
   type        = map(string)

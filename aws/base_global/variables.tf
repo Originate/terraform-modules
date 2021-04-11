@@ -26,6 +26,7 @@ variable "ecr_preserve_image_tags" {
 }
 
 variable "ecr_repository_names" {
-  description = "A list of the ECR repository names"
+  description = "A list of names of ECR repositories that are shared across environments"
   type        = list(string)
+  default     = []
 }
