@@ -33,6 +33,14 @@ module "eks" {
     }
   ]
 
+  map_roles = [
+    {
+      rolearn  = aws_iam_role.admin.arn
+      username = aws_iam_role.admin.arn
+      groups   = ["system:masters"]
+    }
+  ]
+
   node_groups_defaults = {
     ami_type      = "AL2_x86_64"
     capacity_type = "ON_DEMAND"
