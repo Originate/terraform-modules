@@ -35,8 +35,10 @@ module "rds" {
   multi_az          = var.attributes.multi_az
   storage_encrypted = true
 
-  name     = var.sql_database
-  username = random_password.username.result
+  name = var.sql_database
+  # The rds module fails if the username passed in is marked as sensitive:
+  # https://github.com/hashicorp/terraform/issues/28431
+  username = nonsensitive(random_password.username.result)
   password = random_password.password.result
 
   vpc_security_group_ids = [aws_security_group.rds.id]
