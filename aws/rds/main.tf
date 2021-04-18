@@ -17,7 +17,7 @@ resource "random_password" "password" {
 
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "2.21.0"
+  version = "2.34.0"
 
   identifier = local.instance_name
 
