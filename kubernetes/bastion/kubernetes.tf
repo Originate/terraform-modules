@@ -14,10 +14,10 @@ resource "kubernetes_secret" "ssh_key" {
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 
-  type = "Opaque"
+  type = "kubernetes.io/ssh-auth"
 
   data = {
-    private_key_pem = tls_private_key.ssh.private_key_pem
+    ssh-privatekey = tls_private_key.ssh.private_key_pem
   }
 }
 
