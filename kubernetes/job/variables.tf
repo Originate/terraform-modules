@@ -42,6 +42,12 @@ variable "secrets" {
   default     = {}
 }
 
+variable "service_account_name" {
+  description = "The name of an existing Kubernetes Service Account to associate with Pods (leave blank to not associate a Service Account)"
+  type        = string
+  default     = null
+}
+
 # Containers are run with read-only root filesystems. Use this to provide
 # applications with a tmpfs volume that they are able to write to if needed.
 variable "ephemeral_mount_paths" {

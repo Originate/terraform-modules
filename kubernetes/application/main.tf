@@ -63,6 +63,8 @@ resource "kubernetes_deployment" "this" {
       }
 
       spec {
+        service_account_name = var.service_account_name
+
         container {
           name  = var.name
           image = "${var.docker_repo}:${var.docker_tag}"
