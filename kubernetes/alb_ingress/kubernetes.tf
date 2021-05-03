@@ -36,9 +36,7 @@ resource "kubernetes_ingress" "public" {
         {
           type = "fixed-response"
           fixedResponseConfig = {
-            # contentType = "text/plain"
             statusCode = "404"
-            # messageBody = ""
           }
         }
       )

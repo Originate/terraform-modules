@@ -33,7 +33,7 @@ variable "eks_oidc_issuer_url" {
   type        = string
 }
 
-variable "iam_policy" {
+variable "iam_policy_document" {
   description = "The IAM policy document of permissions to apply to the Service Account"
   type        = string
 }

@@ -28,5 +28,5 @@ resource "aws_iam_role_policy" "this" {
   name = "${var.service_name}-permissions"
   role = aws_iam_role.this.id
 
-  policy = var.iam_policy
+  policy = var.iam_policy_document
 }
