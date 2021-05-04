@@ -8,6 +8,6 @@ resource "aws_kms_key" "secrets" {
 }
 
 resource "aws_kms_alias" "secrets" {
-  name          = "alias/${aws_ecs_cluster.this.name}-secrets"
+  name          = "alias/ecs/${aws_ecs_cluster.this.name}-secrets"
   target_key_id = aws_kms_key.secrets.key_id
 }

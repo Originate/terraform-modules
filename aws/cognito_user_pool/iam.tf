@@ -1,7 +1,7 @@
 resource "random_uuid" "external_id" {}
 
 resource "aws_iam_role" "this" {
-  name = "${var.stack}-${var.env}-${var.identifier}-cognito-user-pool"
+  name = "${local.pool_name}-cognito-user-pool"
 
   assume_role_policy = jsonencode(
     {

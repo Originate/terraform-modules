@@ -1,4 +1,5 @@
 locals {
+  pool_name = "${var.stack}-${var.env}-${var.identifier}"
   writable_user_attributes = [
     "address",
     "birthdate",
@@ -25,7 +26,7 @@ locals {
 }
 
 resource "aws_cognito_user_pool" "this" {
-  name = "${var.stack}-${var.env}-${var.identifier}"
+  name = local.pool_name
 
   mfa_configuration          = "OPTIONAL"
   username_attributes        = ["email"]
