@@ -91,8 +91,6 @@ resource "aws_cognito_user_pool" "this" {
       <strong>{####}</strong>
     EOT
   }
-
-  tags = var.default_tags
 }
 
 resource "aws_cognito_user_pool_client" "this" {

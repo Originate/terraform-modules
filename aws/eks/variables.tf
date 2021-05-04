@@ -8,11 +8,6 @@ variable "env" {
   type        = string
 }
 
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "kubernetes_version" {
   description = "The version of Kubernetes to use"
   type        = string

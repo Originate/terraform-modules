@@ -18,8 +18,6 @@ resource "aws_iam_role" "admin" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy" "admin" {

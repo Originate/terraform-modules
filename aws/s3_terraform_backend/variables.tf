@@ -3,11 +3,6 @@ variable "stack" {
   type        = string
 }
 
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "config_output_path" {
   description = "The path to save the backend configuration file, or leave empty to not write a configuration file"
   type        = string

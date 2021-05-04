@@ -14,8 +14,6 @@ resource "aws_s3_bucket" "tfstate" {
   versioning {
     enabled = true
   }
-
-  tags = var.default_tags
 }
 
 resource "aws_s3_bucket_public_access_block" "tfstate" {

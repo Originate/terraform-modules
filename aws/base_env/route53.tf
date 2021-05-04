@@ -6,8 +6,6 @@ resource "aws_route53_zone" "environment" {
   name = "${var.env}.${data.aws_route53_zone.base.name}"
 
   force_destroy = false
-
-  tags = var.default_tags
 }
 
 resource "aws_route53_record" "delegation_ns" {

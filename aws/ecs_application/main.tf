@@ -67,8 +67,6 @@ resource "aws_ecs_task_definition" "this" {
       )
     ]
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_ecs_service" "this" {
@@ -98,8 +96,6 @@ resource "aws_ecs_service" "this" {
     container_name   = var.name
     container_port   = var.container_port
   }
-
-  tags = var.default_tags
 
   wait_for_steady_state = true
 }

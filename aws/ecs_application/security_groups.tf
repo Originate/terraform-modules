@@ -17,7 +17,7 @@ resource "aws_security_group" "ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.default_tags, {
+  tags = {
     Name = "${var.cluster_name}-${var.name}-ecs-tasks"
-  })
+  }
 }

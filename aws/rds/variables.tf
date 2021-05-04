@@ -13,8 +13,6 @@ variable "attributes" {
       stack = string
       # The name of the environment
       env = string
-      # Default tags to add to AWS resources
-      default_tags = map(string)
       # The ID of the VPC
       vpc_id = string
       # The list of IDs to place the EKS cluster and workers

@@ -3,8 +3,6 @@ resource "aws_kms_key" "tfstate" {
   deletion_window_in_days = var.kms_key_deletion_window_in_days
   is_enabled              = true
   enable_key_rotation     = true
-
-  tags = var.default_tags
 }
 
 resource "aws_kms_alias" "tfstate" {

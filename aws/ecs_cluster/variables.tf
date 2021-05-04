@@ -8,11 +8,6 @@ variable "env" {
   type        = string
 }
 
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "kms_key_deletion_window_in_days" {
   description = "Duration in days after which the key is deleted after destruction of the resource"
   type        = number

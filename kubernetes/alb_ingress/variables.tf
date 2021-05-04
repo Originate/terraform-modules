@@ -1,11 +1,11 @@
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "kubernetes_namespace" {
   description = "The namespace to deploy into"
   type        = string
+}
+
+variable "alb_tags" {
+  description = "Tags to add to the provisioned ALB"
+  type        = map(string)
 }
 
 variable "route53_zone_id" {

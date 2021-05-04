@@ -17,6 +17,4 @@ resource "aws_lb_target_group" "this" {
     interval            = 15
     timeout             = 5
   }
-
-  tags = var.default_tags
 }

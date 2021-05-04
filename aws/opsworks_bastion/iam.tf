@@ -14,8 +14,6 @@ resource "aws_iam_role" "opsworks" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy" "opsworks" {
@@ -64,13 +62,9 @@ resource "aws_iam_role" "instance" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_instance_profile" "this" {
   name = local.name
   role = aws_iam_role.instance.name
-
-  tags = var.default_tags
 }

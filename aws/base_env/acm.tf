@@ -3,8 +3,6 @@ resource "aws_acm_certificate" "environment" {
   subject_alternative_names = ["*.${aws_route53_zone.environment.name}"]
   validation_method         = "DNS"
 
-  tags = var.default_tags
-
   lifecycle {
     create_before_destroy = true
   }

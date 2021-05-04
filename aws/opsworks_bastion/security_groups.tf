@@ -17,7 +17,7 @@ resource "aws_security_group" "ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.default_tags, {
+  tags = {
     Name = local.name
-  })
+  }
 }

@@ -22,8 +22,6 @@ resource "aws_iam_role" "this" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy" "this" {

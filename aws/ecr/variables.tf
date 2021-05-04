@@ -9,11 +9,6 @@ variable "env" {
   default     = ""
 }
 
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "name" {
   description = "The name of this repository"
   type        = string

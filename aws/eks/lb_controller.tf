@@ -31,8 +31,6 @@ resource "aws_iam_role" "lb_controller" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy" "lb_controller" {

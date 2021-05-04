@@ -7,6 +7,4 @@ resource "aws_dynamodb_table" "terraform_lock" {
     name = "LockID"
     type = "S"
   }
-
-  tags = var.default_tags
 }

@@ -35,8 +35,6 @@ resource "aws_lb" "this" {
   security_groups    = [aws_security_group.this.id]
   subnets            = var.subnet_ids
   enable_http2       = true
-
-  tags = var.default_tags
 }
 
 resource "aws_lb_listener" "http" {

@@ -23,8 +23,6 @@ resource "aws_iam_role" "task_execution" {
       ]
     }
   )
-
-  tags = var.default_tags
 }
 
 resource "aws_iam_role_policy_attachment" "task_execution" {

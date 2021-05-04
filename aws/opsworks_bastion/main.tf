@@ -23,8 +23,7 @@ resource "aws_opsworks_stack" "this" {
   use_custom_cookbooks          = false
   use_opsworks_security_groups  = false
 
-  tags = var.default_tags
-
+  # Wait for permissions to be set before creating the stack
   depends_on = [aws_iam_role_policy.opsworks]
 }
 
@@ -43,8 +42,6 @@ resource "aws_opsworks_custom_layer" "this" {
   auto_healing                = true
   install_updates_on_boot     = true
   use_ebs_optimized_instances = true
-
-  tags = var.default_tags
 }
 
 resource "aws_opsworks_instance" "this" {

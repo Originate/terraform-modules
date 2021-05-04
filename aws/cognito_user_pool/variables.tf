@@ -8,11 +8,6 @@ variable "env" {
   type        = string
 }
 
-variable "default_tags" {
-  description = "Default tags to add to AWS resources"
-  type        = map(string)
-}
-
 variable "identifier" {
   description = "A short identifying name for this user pool"
   type        = string

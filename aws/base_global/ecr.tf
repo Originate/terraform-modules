@@ -2,8 +2,7 @@ module "ecr" {
   for_each = toset(var.ecr_repository_names)
   source   = "../ecr"
 
-  stack        = var.stack
-  default_tags = var.default_tags
+  stack = var.stack
 
   name                = each.key
   keep_image_count    = var.ecr_keep_image_count

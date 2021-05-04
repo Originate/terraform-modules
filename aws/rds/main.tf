@@ -64,6 +64,4 @@ module "rds" {
   deletion_protection       = var.attributes.enable_delete_protection
   skip_final_snapshot       = var.attributes.skip_final_snapshot
   final_snapshot_identifier = "${local.instance_name}-finalsnapshot-${random_uuid.final_snapshot.result}"
-
-  tags = var.attributes.default_tags
 }
