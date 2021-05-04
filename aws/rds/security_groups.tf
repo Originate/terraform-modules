@@ -1,6 +1,6 @@
 resource "aws_security_group" "rds" {
   name        = "${local.instance_name}-rds"
-  description = "Security group for ${var.sql_database}"
+  description = "Security group for ${local.instance_name}"
   vpc_id      = var.attributes.vpc_id
 
   ingress {
