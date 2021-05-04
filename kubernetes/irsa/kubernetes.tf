@@ -1,5 +1,5 @@
 locals {
-  name = "${var.service_name}-iam-role"
+  service_account_name = "${var.service_name}-iam-role"
 }
 
 resource "kubernetes_service_account" "this" {
