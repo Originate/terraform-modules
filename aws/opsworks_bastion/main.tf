@@ -50,9 +50,11 @@ resource "aws_opsworks_instance" "this" {
     aws_opsworks_custom_layer.this.id,
   ]
 
-  instance_type       = "t3.nano"
+  hostname            = "bastion"
+  instance_type       = "t3.micro"
   state               = "running"
   virtualization_type = "hvm"
+  ebs_optimized       = true
 
   root_block_device {
     volume_type           = "gp2"
