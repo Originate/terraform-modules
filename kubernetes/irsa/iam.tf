@@ -23,16 +23,16 @@ resource "aws_iam_role" "this" {
 }
 
 resource "aws_iam_role_policy" "this" {
-  count = var.iam_policy_document != "" ? 1 : 0
+  for_each = var.inline_iam_policy_documents
 
-  name = "${var.service_name}-permissions"
+  name = each.key
   role = aws_iam_role.this.id
 
-  policy = var.iam_policy_document
+  policy = each.value
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
-  for_each = var.iam_policy_arns
+  for_each = toset(var.attached_iam_policy_arns)
 
   role       = aws_iam_role.this.id
   policy_arn = each.value
