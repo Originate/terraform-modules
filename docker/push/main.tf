@@ -10,7 +10,7 @@ resource "null_resource" "command" {
       ${var.login_command}
 
       if ${var.build_updated_images}; then
-        docker build %{for key, value in var.build_args}--build-arg "${key}=${value}" %{endfor}-t "${var.repo}:${var.tag}" .
+        docker build %{for key, value in var.build_args}--build-arg "${key}=${value}" %{endfor}-f "${var.dockerfile_path}" -t "${var.repo}:${var.tag}" .
         docker push "${var.repo}:${var.tag}"
       else
         docker pull "${var.repo}:${var.tag}"

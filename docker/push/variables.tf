@@ -24,6 +24,12 @@ variable "context_path" {
   default     = null
 }
 
+variable "dockerfile_path" {
+  description = "Optional path of the Dockerfile, relative to var.context_path"
+  type        = string
+  default     = "./Dockerfile"
+}
+
 variable "build_args" {
   description = "A map of build args passed to Docker when building updated images"
   type        = map(string)
