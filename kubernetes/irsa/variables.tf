@@ -29,6 +29,13 @@ variable "eks_oidc_issuer_url" {
 }
 
 variable "iam_policy_document" {
-  description = "The IAM policy document of permissions to apply to the Service Account"
+  description = "An IAM policy document of custom permissions to apply to the Service Account"
   type        = string
+  default     = ""
+}
+
+variable "iam_policy_arns" {
+  description = "A list of IAM policy ARNs to attach to the Service Account"
+  type        = list(string)
+  default     = []
 }
