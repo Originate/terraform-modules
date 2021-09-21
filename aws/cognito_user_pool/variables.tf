@@ -37,32 +37,20 @@ variable "lambda_config" {
   description = "Sets which lambda function to use for various cognito specializations"
   type = object(
     {
-      create_auth_challenge          = string
-      custom_message                 = string
-      define_auth_challenge          = string
-      post_authentication            = string
-      post_confirmation              = string
-      pre_authentication             = string
-      pre_sign_up                    = string
-      pre_token_generation           = string
-      user_migration                 = string
-      verify_auth_challenge_response = string
-      kms_key_id                     = string
+      create_auth_challenge          = optional(string)
+      custom_message                 = optional(string)
+      define_auth_challenge          = optional(string)
+      post_authentication            = optional(string)
+      post_confirmation              = optional(string)
+      pre_authentication             = optional(string)
+      pre_sign_up                    = optional(string)
+      pre_token_generation           = optional(string)
+      user_migration                 = optional(string)
+      verify_auth_challenge_response = optional(string)
+      kms_key_id                     = optional(string)
     }
   )
-  default = {
-    create_auth_challenge          = ""
-    custom_message                 = ""
-    define_auth_challenge          = ""
-    post_authentication            = ""
-    post_confirmation              = ""
-    pre_authentication             = ""
-    pre_sign_up                    = ""
-    pre_token_generation           = ""
-    user_migration                 = ""
-    verify_auth_challenge_response = ""
-    kms_key_id                     = ""
-  }
+  default = {}
 }
 
 variable "clients" {
