@@ -33,6 +33,26 @@ variable "password_policy" {
   }
 }
 
+variable "lambda_config" {
+  description = "Sets which lambda function to use for various cognito specializations"
+  type = object(
+    {
+      create_auth_challenge          = optional(string)
+      custom_message                 = optional(string)
+      define_auth_challenge          = optional(string)
+      post_authentication            = optional(string)
+      post_confirmation              = optional(string)
+      pre_authentication             = optional(string)
+      pre_sign_up                    = optional(string)
+      pre_token_generation           = optional(string)
+      user_migration                 = optional(string)
+      verify_auth_challenge_response = optional(string)
+      kms_key_id                     = optional(string)
+    }
+  )
+  default = {}
+}
+
 variable "clients" {
   description = "A map of user pool clients to create"
   type = map(object(

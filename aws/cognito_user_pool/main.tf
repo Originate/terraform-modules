@@ -91,6 +91,20 @@ resource "aws_cognito_user_pool" "this" {
       <strong>{####}</strong>
     EOT
   }
+
+  lambda_config {
+    create_auth_challenge          = var.lambda_config.create_auth_challenge
+    custom_message                 = var.lambda_config.custom_message
+    define_auth_challenge          = var.lambda_config.define_auth_challenge
+    post_authentication            = var.lambda_config.post_authentication
+    post_confirmation              = var.lambda_config.post_confirmation
+    pre_authentication             = var.lambda_config.pre_authentication
+    pre_sign_up                    = var.lambda_config.pre_sign_up
+    pre_token_generation           = var.lambda_config.pre_token_generation
+    user_migration                 = var.lambda_config.user_migration
+    verify_auth_challenge_response = var.lambda_config.verify_auth_challenge_response
+    kms_key_id                     = var.lambda_config.kms_key_id
+  }
 }
 
 resource "aws_cognito_user_pool_client" "this" {
