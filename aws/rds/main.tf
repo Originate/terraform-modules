@@ -22,7 +22,7 @@ module "rds" {
   identifier = local.instance_name
 
   engine                      = "postgres"
-  engine_version              = "12.5"
+  engine_version              = "12"
   family                      = "postgres12"
   major_engine_version        = "12"
   allow_major_version_upgrade = false
