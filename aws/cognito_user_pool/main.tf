@@ -49,15 +49,9 @@ resource "aws_cognito_user_pool" "this" {
     allow_admin_create_user_only = false
 
     invite_message_template {
-      email_subject = "Your temporary password"
-      email_message = <<-EOT
-        Your username is {username} and temporary password is
-        <strong>{####}</strong>
-      EOT
-      sms_message   = <<-EOT
-        Your username is {username} and temporary password is
-        <strong>{####}</strong>
-      EOT
+      email_subject = var.create_user_messaging.email_subject
+      email_message = var.create_user_messaging.email_message
+      sms_message   = var.create_user_messaging.sms_message
     }
   }
 
