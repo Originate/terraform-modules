@@ -74,3 +74,25 @@ variable "groups" {
   ))
   default = {}
 }
+
+variable "create_user_messaging" {
+  description = "Provides basic customized messaging for new accounts"
+  type = object(
+    {
+      email_subject = optional(string)
+      email_message = optional(string)
+      sms_message   = optional(string)
+    }
+  )
+  default = {
+    email_subject = "Your temporary password"
+    email_message = <<-EOT
+      Your username is {username} and temporary password is
+      <strong>{####}</strong>
+    EOT
+    sms_message   = <<-EOT
+      Your username is {username} and temporary password is
+      <strong>{####}</strong>
+    EOT
+  }
+}
