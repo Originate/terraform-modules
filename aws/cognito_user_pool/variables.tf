@@ -84,17 +84,6 @@ variable "create_user_messaging" {
       sms_message   = optional(string)
     }
   )
-  default = {
-    email_subject = "Your temporary password"
-    email_message = <<-EOT
-      Your username is {username} and temporary password is
-      <strong>{####}</strong>
-    EOT
-    sms_message   = <<-EOT
-      Your username is {username} and temporary password is
-      <strong>{####}</strong>
-    EOT
-  }
 }
 
 variable "allow_admin_create_user_only" {
