@@ -33,3 +33,9 @@ variable "ingress_rules" {
     }
   ))
 }
+
+variable "base_redirect_subdomain" {
+  description = "If provided, redirects requests made to the base domain to the specified subdomain"
+  type        = string
+  default     = ""
+}

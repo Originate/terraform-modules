@@ -12,6 +12,7 @@ resource "kubernetes_ingress" "public" {
       "alb.ingress.kubernetes.io/tags"            = join(",", [for k, v in var.alb_tags : "${k}=${v}"])
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
       "alb.ingress.kubernetes.io/certificate-arn" = var.acm_certificate_arn
+      "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
       "alb.ingress.kubernetes.io/listen-ports" = jsonencode(
         [
           {
@@ -22,12 +23,13 @@ resource "kubernetes_ingress" "public" {
           }
         ]
       )
-      "alb.ingress.kubernetes.io/actions.ssl-redirect" = jsonencode(
+      "alb.ingress.kubernetes.io/actions.redirect-base" = jsonencode(
         {
           type = "redirect"
           redirectConfig = {
-            protocol   = "HTTPS"
+            host       = var.base_redirect_subdomain != "" ? "${var.base_redirect_subdomain}.${data.aws_route53_zone.base.name}" : null
             port       = "443"
+            protocol   = "HTTPS"
             statusCode = "HTTP_301"
           }
         }
@@ -44,14 +46,20 @@ resource "kubernetes_ingress" "public" {
   }
 
   spec {
-    rule {
-      http {
-        path {
-          path = "/*"
+    dynamic "rule" {
+      for_each = var.base_redirect_subdomain != "" ? ["redirect-base"] : []
 
-          backend {
-            service_name = "ssl-redirect"
-            service_port = "use-annotation"
+      content {
+        host = data.aws_route53_zone.base.name
+
+        http {
+          path {
+            path = "/*"
+
+            backend {
+              service_name = rule.value
+              service_port = "use-annotation"
+            }
           }
         }
       }
