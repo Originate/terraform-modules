@@ -74,3 +74,20 @@ variable "groups" {
   ))
   default = {}
 }
+
+variable "create_user_messaging" {
+  description = "Provides basic customized messaging for new accounts"
+  type = object(
+    {
+      email_subject = optional(string)
+      email_message = optional(string)
+      sms_message   = optional(string)
+    }
+  )
+}
+
+variable "allow_admin_create_user_only" {
+  description = "Indicates if users should not be able to self register. False = User can self register"
+  type        = string
+  default     = false
+}
