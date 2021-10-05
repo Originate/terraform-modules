@@ -84,6 +84,7 @@ variable "create_user_messaging" {
       sms_message   = optional(string)
     }
   )
+  default = {}
 }
 
 variable "allow_admin_create_user_only" {
