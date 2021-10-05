@@ -46,7 +46,7 @@ resource "aws_cognito_user_pool" "this" {
   }
 
   admin_create_user_config {
-    allow_admin_create_user_only = false
+    allow_admin_create_user_only = var.allow_admin_create_user_only
 
     invite_message_template {
       email_subject = var.create_user_messaging.email_subject

@@ -96,3 +96,9 @@ variable "create_user_messaging" {
     EOT
   }
 }
+
+variable "allow_admin_create_user_only" {
+  description = "Indicates if users should not be able to self register. False = User can self register"
+  type        = string
+  default     = false
+}
