@@ -92,3 +92,17 @@ variable "allow_admin_create_user_only" {
   type        = string
   default     = false
 }
+
+variable "email_config" {
+  description = "Sets email configuration for cognito"
+  type = object(
+    {
+      configuration_set      = optional(string)
+      email_sending_account  = optional(string)
+      from_email_address     = optional(string)
+      reply_to_email_address = optional(string)
+      source_arn             = optional(string)
+    }
+  )
+  default = {}
+}
