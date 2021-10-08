@@ -126,6 +126,24 @@ resource "aws_cognito_user_pool" "this" {
       kms_key_id                     = lambda_config.value.kms_key_id
     }
   }
+
+  # This is based on
+  # https://github.com/lgallard/terraform-aws-cognito-user-pool/blob/master/main.tf
+  #
+  # Note that this implementation will work for configuring boolean and datetime
+  # attributes, but will not work for string or number attributes because those
+  # require constraint configurations in the form of additional nested dynamic
+  # blocks.
+  dynamic "schema" {
+    for_each = var.schemas
+    content {
+      attribute_data_type      = lookup(schema.value, "attribute_data_type")
+      developer_only_attribute = lookup(schema.value, "developer_only_attribute")
+      mutable                  = lookup(schema.value, "mutable")
+      name                     = lookup(schema.value, "name")
+      required                 = lookup(schema.value, "required")
+    }
+  }
 }
 
 resource "aws_cognito_user_pool_client" "this" {
