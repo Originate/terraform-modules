@@ -1,0 +1,19 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform-fmt:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Terraform fmt
+        uses: Originate/github-actions/terraform-fmt@v1
+        with:
+          working_directory: .
