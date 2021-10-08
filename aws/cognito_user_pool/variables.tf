@@ -111,7 +111,7 @@ variable "schemas" {
   description = "Configuration for the schema attributes of a user pool. See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool#schema"
   type = list(object(
     {
-      attribute_data_type      = string # must be one of "Boolean" or "DateTime"
+      attribute_data_type      = string
       developer_only_attribute = optional(bool)
       mutable                  = optional(bool)
       name                     = string
@@ -119,4 +119,11 @@ variable "schemas" {
     }
   ))
   default = []
+  validation {
+    condition = alltrue([
+      for schema in var.schemas :
+      schema.attribute_data_type == "Boolean" || schema.attribute_data_type == "DateTime"
+    ])
+    error_message = "The property attribute_data_type in objects in schemas must be one of 'Boolean' or 'DateTime'."
+  }
 }
