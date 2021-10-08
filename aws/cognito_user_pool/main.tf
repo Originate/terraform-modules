@@ -138,11 +138,11 @@ resource "aws_cognito_user_pool" "this" {
     for_each = var.schemas
 
     content {
-      attribute_data_type      = lookup(schema.value, "attribute_data_type")
-      developer_only_attribute = lookup(schema.value, "developer_only_attribute")
-      mutable                  = lookup(schema.value, "mutable")
-      name                     = lookup(schema.value, "name")
-      required                 = lookup(schema.value, "required")
+      attribute_data_type      = schema.value.attribute_data_type
+      developer_only_attribute = schema.value.developer_only_attribute
+      mutable                  = schema.value.mutable
+      name                     = schema.value.name
+      required                 = schema.value.required
     }
   }
 }
