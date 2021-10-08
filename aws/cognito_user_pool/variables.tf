@@ -57,7 +57,9 @@ variable "clients" {
   description = "A map of user pool clients to create"
   type = map(object(
     {
-      name = string
+      name             = string
+      read_attributes  = optional(list(string))
+      write_attributes = optional(list(string))
     }
   ))
   default = {}
