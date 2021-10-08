@@ -136,6 +136,7 @@ resource "aws_cognito_user_pool" "this" {
   # blocks.
   dynamic "schema" {
     for_each = var.schemas
+
     content {
       attribute_data_type      = lookup(schema.value, "attribute_data_type")
       developer_only_attribute = lookup(schema.value, "developer_only_attribute")
