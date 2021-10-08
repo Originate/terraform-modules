@@ -105,6 +105,7 @@ variable "email_config" {
     }
   )
   default = {}
+}
 
 variable "schemas" {
   description = "Configuration for the schema attributes of a user pool. See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool#schema"
