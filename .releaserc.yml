@@ -1,5 +1,5 @@
 branches:
-  - "v([0-9])" # Maintenance branches are of the form v1, v2, etc.
+  - "v([0-9]+)" # Maintenance branches are of the form v1, v2, etc.
   - main
 plugins:
   - "@semantic-release/commit-analyzer"
