@@ -1,6 +1,6 @@
 locals {
   pool_name = "${var.stack}-${var.env}-${var.identifier}"
-  writable_user_attributes = [
+  default_writable_user_attributes = [
     "address",
     "birthdate",
     "email",
@@ -19,7 +19,7 @@ locals {
     "website",
     "zoneinfo"
   ]
-  readable_user_attributes = concat(local.writable_user_attributes, [
+  default_readable_user_attributes = concat(local.default_writable_user_attributes, [
     "email_verified",
     "phone_number_verified"
   ])
@@ -155,8 +155,8 @@ resource "aws_cognito_user_pool_client" "this" {
 
   generate_secret               = false
   prevent_user_existence_errors = "ENABLED"
-  read_attributes               = local.readable_user_attributes
-  write_attributes              = local.writable_user_attributes
+  read_attributes               = coalesce(each.value.read_attributes, local.default_readable_user_attributes)
+  write_attributes              = coalesce(each.value.write_attributes, local.default_writable_user_attributes)
 }
 
 resource "aws_cognito_user_group" "this" {
