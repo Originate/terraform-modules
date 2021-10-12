@@ -1,0 +1,42 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - v*
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      # Configuration for semantic-release is in `.releaserc.yml`
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release@18.0.0
+
+      # At this point the release is done if it was time for a release. Steps
+      # below this point perform a fast-forward merge from main to the latest
+      # major version branch if we just tagged a release.
+
+      - name: Get major version of tag for the current commit in main
+        id: get_tag
+        run: |
+          export MAJOR_VERSION=$(git tag --points-at HEAD | grep -oE '^v[0-9]+' | sort | tail -n1)
+          echo "::set-output name=major_version::$MAJOR_VERSION"
+
+      - name: Update latest major version branch
+        if: startsWith(steps.get_tag.outputs.major_version, 'v')
+        run: |
+          git switch ${{ steps.get_tag.outputs.major_version }} || git switch -c ${{ steps.get_tag.outputs.major_version }}
+          git merge --ff-only main ${{ steps.get_tag.outputs.major_version }}
+          git push origin ${{ steps.get_tag.outputs.major_version }}
