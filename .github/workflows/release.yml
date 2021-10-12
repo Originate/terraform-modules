@@ -35,7 +35,9 @@ jobs:
           echo "::set-output name=major_version::$MAJOR_VERSION"
 
       - name: Update latest major version branch
-        if: startsWith(steps.get_tag.outputs.major_version, 'v')
+        if: |
+          startsWith(steps.get_tag.outputs.major_version, 'v') &&
+          github.ref == 'refs/heads/main'
         run: |
           git switch ${{ steps.get_tag.outputs.major_version }} || git switch -c ${{ steps.get_tag.outputs.major_version }}
           git merge --ff-only main ${{ steps.get_tag.outputs.major_version }}
