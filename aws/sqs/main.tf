@@ -9,7 +9,7 @@ locals {
 resource "aws_sqs_queue" "this" {
   name                        = local.full_queue_name
   fifo_queue                  = var.is_fifo
-  content_based_deduplication = var.content_based_deduplication
+  content_based_deduplication = var.is_fifo && var.content_based_deduplication
   receive_wait_time_seconds   = var.receive_wait_time_seconds
   visibility_timeout_seconds  = var.visibility_timeout_seconds
 }

@@ -32,7 +32,7 @@ variable "is_fifo" {
 }
 
 variable "content_based_deduplication" {
-  description = "Specifies if this queue should use content-based deduplication. Must be false if using a standard (non-fifo) queue. Defaults to true"
+  description = "Specifies if this queue should use content-based deduplication. Defaults to true. Note: If is_fifo is not set to true, then this value is ignored."
   type        = bool
   default     = true
 }
