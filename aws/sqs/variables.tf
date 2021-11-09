@@ -20,9 +20,9 @@ variable "visibility_timeout_seconds" {
 }
 
 variable "receive_wait_time_seconds" {
-  description = "The time to wait when polling for new messages. Use 0 for immediate response. Longer values are preferred. AWS recommends a maximum of 20 seconds."
+  description = "The time to wait when polling for new messages. Use 0 for immediate response. Longer values are preferred. Defaults to 20, which is the maximum."
   type        = number
-  default     = 5
+  default     = 20
 }
 
 variable "is_fifo" {
