@@ -8,7 +8,7 @@ variable "env" {
   type        = string
 }
 
-variable "queue_name" {
+variable "identifier" {
   description = "The shorthand name of the queue. The full queue name can be retrieved as an output. Note that an empty string is still a valid queue name."
   type        = string
 }
