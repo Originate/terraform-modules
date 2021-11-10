@@ -13,23 +13,3 @@ resource "aws_sqs_queue" "this" {
   receive_wait_time_seconds   = var.receive_wait_time_seconds
   visibility_timeout_seconds  = var.visibility_timeout_seconds
 }
-
-resource "aws_sqs_queue_policy" "this" {
-  queue_url = aws_sqs_queue.this.id
-
-  policy = jsonencode(
-    {
-      Version : "2008-10-17"
-      Id : "__default_policy_ID"
-      Statement : [
-        {
-          Sid : "__owner_statement"
-          Effect : "Allow"
-          Principal : "*"
-          Action : "sqs:*"
-          Resource : "${aws_sqs_queue.this.arn}"
-        }
-      ]
-    }
-  )
-}
