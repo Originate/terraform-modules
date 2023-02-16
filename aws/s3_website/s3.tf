@@ -93,5 +93,5 @@ resource "aws_s3_object" "content" {
 
   source       = "${var.source_dir}/${each.value}"
   etag         = filemd5("${var.source_dir}/${each.value}")
-  content_type = lookup(local.file_types, regex("\\.[^.]+$", each.value), null)
+  content_type = lookup(local.file_types, try(regex("\\.[^.]+$", each.value), ""), null)
 }
