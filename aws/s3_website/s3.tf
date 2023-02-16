@@ -16,6 +16,20 @@ resource "aws_s3_bucket_website_configuration" "website" {
       key = error_document.value
     }
   }
+
+  dynamic "routing_rule" {
+    for_each = var.error_document == "" ? { 404 = "/" } : {}
+
+    content {
+      condition {
+        http_error_code_returned_equals = routing_rule.key
+      }
+
+      redirect {
+        replace_key_prefix_with = routing_rule.value
+      }
+    }
+  }
 }
 
 resource "aws_s3_bucket_acl" "website" {
