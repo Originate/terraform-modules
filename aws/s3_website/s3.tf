@@ -107,6 +107,6 @@ resource "aws_s3_object" "content" {
   acl    = "public-read"
 
   source       = "${var.source_dir}/${each.value}"
-  etag         = filemd5("${var.source_dir}/${each.value}")
+  source_hash  = filemd5("${var.source_dir}/${each.value}")
   content_type = lookup(local.file_types, try(regex("\\.[^.]+$", each.value), ""), null)
 }
