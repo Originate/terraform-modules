@@ -18,15 +18,16 @@ resource "aws_s3_bucket_website_configuration" "website" {
   }
 
   dynamic "routing_rule" {
-    for_each = var.error_document == "" ? { 404 = "/" } : {}
+    for_each = var.error_document == "" ? [403, 404] : []
 
     content {
       condition {
-        http_error_code_returned_equals = routing_rule.key
+        http_error_code_returned_equals = routing_rule.value
       }
 
       redirect {
-        replace_key_prefix_with = routing_rule.value
+        host_name        = var.fqdn
+        replace_key_with = var.index_document
       }
     }
   }
