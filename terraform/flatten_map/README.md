@@ -6,9 +6,10 @@ provided separator. If no separator is provided, a period ("`.`") will be used
 by default.
 
 > WARNING: Due to Terraform not supporting recursion, this module is bounded to
-> a nesting depth of 20. Values beyond 20 layers deep will not be returned
-> (though it isn't difficult to reverse-engineer this module and extend it to
-> support a larger depth if really needed).
+> a nesting depth of 20. A validation error will be thrown if the value passed
+> into `var.in` has a depth greater than 20 (though it isn't difficult to
+> reverse-engineer this module and extend it to support a larger depth if really
+> needed).
 
 ## Example
 
