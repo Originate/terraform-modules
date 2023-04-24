@@ -2,11 +2,6 @@ resource "aws_s3_bucket" "cloudtrail" {
   bucket = "${var.stack}-cloudtrail-logs"
 }
 
-resource "aws_s3_bucket_acl" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
   bucket = aws_s3_bucket.cloudtrail.id
 
